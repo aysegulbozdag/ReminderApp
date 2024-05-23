@@ -31,7 +31,7 @@ class NewReminderFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
        binding.txtAddCheckList.setOnClickListener {
-           binding.rvCheckList.adapter = CheckListAdapter(listOf(CheckModel()).toMutableList())
+           binding.rvCheckList.adapter = CheckListAdapter(mutableListOf(CheckModel()))
        }
     }
 
