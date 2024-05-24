@@ -33,6 +33,10 @@ class NewReminderFragment : Fragment() {
        binding.txtAddCheckList.setOnClickListener {
            binding.rvCheckList.adapter = CheckListAdapter(mutableListOf(CheckModel()))
        }
+
+        binding.txtAddImage.setOnClickListener {
+
+        }
     }
 
     override fun onDestroyView() {

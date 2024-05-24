@@ -27,7 +27,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/imgCheck"
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:layout_marginTop="16dp"
@@ -43,9 +43,9 @@
         android:text="Kontrol Listesine Ekle"
         android:textColor="#FFFFFF"
         android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView"
-        app:layout_constraintStart_toEndOf="@+id/imageView"
-        app:layout_constraintTop_toTopOf="@+id/imageView" />
+        app:layout_constraintBottom_toBottomOf="@+id/imgCheck"
+        app:layout_constraintStart_toEndOf="@+id/imgCheck"
+        app:layout_constraintTop_toTopOf="@+id/imgCheck" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvCheckList"
@@ -54,11 +54,34 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toTopOf="@+id/txtAddImage"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        app:layout_constraintTop_toBottomOf="@+id/imgCheck"
         tools:listitem="@layout/rv_check_list" />
+
+    <TextView
+        android:id="@+id/txtAddImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="Görüntü Ekle"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/imgPhoto"
+        app:layout_constraintStart_toEndOf="@+id/imgPhoto"
+        app:layout_constraintTop_toTopOf="@+id/imgPhoto" />
+
+    <ImageView
+        android:id="@+id/imgPhoto"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/outline_add_photo_alternate_24"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rvCheckList" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
