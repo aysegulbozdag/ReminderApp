@@ -1,27 +1,23 @@
-package com.example.reminderapp
+package com.example.reminderapp.ui.createnewreminder.adapter
 
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.EditText
-import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.Adapter
+import com.example.reminderapp.data.CheckModel
 import com.example.reminderapp.databinding.RvCheckListBinding
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
-class CheckListAdapter(var checkList: MutableList<CheckModel>) :
-    Adapter<CheckListAdapter.ViewHolder>() {
+class PhotoListAdapter(var checkList: MutableList<CheckModel>) :
+    Adapter<PhotoListAdapter.ViewHolder>() {
 
     private lateinit var binding: RvCheckListBinding
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CheckListAdapter.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         binding = RvCheckListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: CheckListAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(checkList[position])
     }
 
