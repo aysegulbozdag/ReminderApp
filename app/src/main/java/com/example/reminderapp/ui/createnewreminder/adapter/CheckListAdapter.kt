@@ -6,14 +6,14 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import com.example.reminderapp.data.CheckModel
-import com.example.reminderapp.databinding.RvCheckListBinding
+import com.example.reminderapp.databinding.ItemCheckListBinding
 
 class CheckListAdapter(var checkList: MutableList<CheckModel>) :
     Adapter<CheckListAdapter.ViewHolder>() {
 
-    private lateinit var binding: RvCheckListBinding
+    private lateinit var binding: ItemCheckListBinding
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        binding = RvCheckListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        binding = ItemCheckListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
 
@@ -23,7 +23,7 @@ class CheckListAdapter(var checkList: MutableList<CheckModel>) :
 
     override fun getItemCount(): Int = checkList.size
 
-    inner class ViewHolder(binding: RvCheckListBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class ViewHolder(binding: ItemCheckListBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(checkModel: CheckModel) {
             checkModel.title = binding.editTextText.text.toString()

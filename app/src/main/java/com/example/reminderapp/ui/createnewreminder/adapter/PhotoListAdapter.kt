@@ -1,52 +1,76 @@
 package com.example.reminderapp.ui.createnewreminder.adapter
 
-import android.view.KeyEvent
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.Adapter
-import com.example.reminderapp.data.CheckModel
-import com.example.reminderapp.databinding.RvCheckListBinding
+import com.example.reminderapp.R
+import com.example.reminderapp.databinding.ItemPhotoListBinding
 
-class PhotoListAdapter(var checkList: MutableList<CheckModel>) :
-    Adapter<PhotoListAdapter.ViewHolder>() {
+class PhotoListAdapter(
+    private var photoList: MutableList<Uri>,
+    private val onAddPhotoClickListener: OnAddPhotoClickListener? = null
+) :
+    Adapter<RecyclerView.ViewHolder>() {
 
-    private lateinit var binding: RvCheckListBinding
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        binding = RvCheckListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return ViewHolder(binding)
-    }
+    private val ITEM_VIEW_TYPE_ITEM = 0
+    private val ITEM_VIEW_TYPE_FOOTER = 1
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        return when (viewType) {
+            ITEM_VIEW_TYPE_ITEM -> {
+                val binding =
+                    ItemPhotoListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+                PhotoViewHolder(binding)
+            }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(checkList[position])
-    }
-
-    override fun getItemCount(): Int = checkList.size
-
-    inner class ViewHolder(binding: RvCheckListBinding) : RecyclerView.ViewHolder(binding.root) {
-
-        fun bind(checkModel: CheckModel) {
-            checkModel.title = binding.editTextText.text.toString()
-
-            binding.editTextText.setOnKeyListener { v, keyCode, event ->
-                if (event.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
-                    checkList.add(adapterPosition + 1, CheckModel())
-                    v.clearFocus()
-                    binding.editTextText.post {
-                        binding.editTextText.requestFocus()
-                    }
-                    notifyItemInserted(adapterPosition + 1)
-                    return@setOnKeyListener true
-                }
-                if (keyCode == KeyEvent.KEYCODE_DEL) {
-                    if (checkList.size > 0) {
-                        checkList.removeAt(adapterPosition)
-                        notifyItemRemoved(adapterPosition)
-                    }
-                    return@setOnKeyListener true
-                }
-                return@setOnKeyListener false
+            else -> {
+                val binding =
+                    ItemPhotoListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+                FooterViewHolder(binding)
             }
         }
     }
+
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        if (getItemViewType(position) == ITEM_VIEW_TYPE_ITEM) {
+            (holder as PhotoViewHolder).bind(photoList[position])
+        } else if (holder is FooterViewHolder) {
+            holder.bind()
+        }
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return if (position == photoList.size) {
+            ITEM_VIEW_TYPE_FOOTER
+        } else {
+            ITEM_VIEW_TYPE_ITEM
+        }
+    }
+
+    override fun getItemCount(): Int = photoList.size + 1
+
+    inner class PhotoViewHolder(private val binding: ItemPhotoListBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+
+        fun bind(uri: Uri) {
+            binding.imageViewer.setImageURI(uri)
+        }
+    }
+
+    inner class FooterViewHolder(private val binding: ItemPhotoListBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun bind() {
+            binding.imageViewer.setImageResource(R.drawable.outline_add_photo_alternate_24)
+            binding.imageViewer.alpha = 0.3f
+            binding.imageViewer.setOnClickListener {
+                onAddPhotoClickListener?.onAddPhotoClick()
+            }
+        }
+    }
+
+    interface OnAddPhotoClickListener {
+        fun onAddPhotoClick()
+    }
+
 }

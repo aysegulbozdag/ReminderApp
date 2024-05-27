@@ -60,7 +60,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imgCheck"
-        tools:listitem="@layout/rv_check_list" />
+        tools:listitem="@layout/item_check_list" />
 
     <TextView
         android:id="@+id/txtAddImage"
