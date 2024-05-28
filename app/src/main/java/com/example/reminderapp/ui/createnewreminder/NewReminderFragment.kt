@@ -39,7 +39,7 @@ class NewReminderFragment : Fragment(), PhotoListAdapter.OnAddPhotoClickListener
 
         onClickListener()
         pickImageGallery()
-        
+
     }
 
     private fun pickImageGallery() {

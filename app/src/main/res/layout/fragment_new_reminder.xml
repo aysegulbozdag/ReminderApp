@@ -90,9 +90,33 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/txtSetDateTime"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtAddImage" />
+
+    <TextView
+        android:id="@+id/txtSetDateTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="Tarih ve Saat Ayarla"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/imgSetDateTime"
+        app:layout_constraintStart_toEndOf="@+id/imgSetDateTime"
+        app:layout_constraintTop_toTopOf="@+id/imgSetDateTime" />
+
+    <ImageView
+        android:id="@+id/imgSetDateTime"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/round_date_range_24"
+        app:layout_constraintEnd_toStartOf="@+id/txtSetDateTime"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rvPhotoList" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
