@@ -15,6 +15,7 @@ import com.example.reminderapp.data.CheckModel
 import com.example.reminderapp.databinding.FragmentNewReminderBinding
 import com.example.reminderapp.ui.createnewreminder.adapter.CheckListAdapter
 import com.example.reminderapp.ui.createnewreminder.adapter.PhotoListAdapter
+import com.example.reminderapp.ui.createnewreminder.bottomsheetdialog.DateAndTimePicker
 
 class NewReminderFragment : Fragment(), PhotoListAdapter.OnAddPhotoClickListener {
 
@@ -80,6 +81,10 @@ class NewReminderFragment : Fragment(), PhotoListAdapter.OnAddPhotoClickListener
 
         binding.txtAddImage.setOnClickListener {
             openGallery()
+        }
+
+        binding.txtSetDateTime.setOnClickListener {
+            DateAndTimePicker().show(childFragmentManager, "DateAndTimePicker")
         }
     }
 

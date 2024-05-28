@@ -12,7 +12,7 @@ import com.example.reminderapp.databinding.FragmentListBinding
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
  */
-class ListFragment : Fragment() {
+class ReminderListFragment : Fragment() {
 
     private var _binding: FragmentListBinding? = null
 
