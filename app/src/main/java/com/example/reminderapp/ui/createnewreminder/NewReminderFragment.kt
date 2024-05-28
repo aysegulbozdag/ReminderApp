@@ -37,16 +37,12 @@ class NewReminderFragment : Fragment(), PhotoListAdapter.OnAddPhotoClickListener
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        onClickListener()
+        pickImageGallery()
+        
+    }
 
-
-        binding.txtAddCheckList.setOnClickListener {
-            binding.rvCheckList.adapter = CheckListAdapter(mutableListOf(CheckModel()))
-        }
-
-        binding.txtAddImage.setOnClickListener {
-            openGallery()
-        }
-
+    private fun pickImageGallery() {
         pickImageLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
                 if (result.resultCode == RESULT_OK) {
@@ -75,7 +71,16 @@ class NewReminderFragment : Fragment(), PhotoListAdapter.OnAddPhotoClickListener
                     }
                 }
             }
+    }
 
+    private fun onClickListener() {
+        binding.txtAddCheckList.setOnClickListener {
+            binding.rvCheckList.adapter = CheckListAdapter(mutableListOf(CheckModel()))
+        }
+
+        binding.txtAddImage.setOnClickListener {
+            openGallery()
+        }
     }
 
     private fun openGallery() {
