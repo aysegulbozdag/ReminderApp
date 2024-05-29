@@ -28,6 +28,7 @@ class DateAndTimePicker : BottomSheetDialogFragment() {
             Log.i("TimePicker", "Hour: $hourOfDay, Minute: $minute")
         }
 
+
         binding.calendarView.setOnDateChangeListener { view, year, month, dayOfMonth ->
             Log.i("CalendarView", "Year: $year, Month: $month, Day: $dayOfMonth")
         }
