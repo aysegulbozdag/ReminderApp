@@ -86,6 +86,15 @@ class NewReminderFragment : Fragment(), PhotoListAdapter.OnAddPhotoClickListener
         binding.txtSetDateTime.setOnClickListener {
             DateAndTimePicker().show(childFragmentManager, "DateAndTimePicker")
         }
+
+        binding.btnCancel.setOnClickListener {
+            requireActivity().onBackPressedDispatcher.onBackPressed()
+        }
+
+        binding.btnFinish.setOnClickListener {
+            // save reminder
+            
+        }
     }
 
     private fun openGallery() {
