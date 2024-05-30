@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.Adapter
-import com.example.reminderapp.data.CheckModel
+import com.example.reminderapp.data.model.CheckModel
 import com.example.reminderapp.databinding.ItemCheckListBinding
 
 class CheckListAdapter(var checkList: MutableList<CheckModel>) :

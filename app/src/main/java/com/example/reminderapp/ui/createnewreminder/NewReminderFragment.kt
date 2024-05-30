@@ -11,7 +11,7 @@ import android.view.ViewGroup
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
-import com.example.reminderapp.data.CheckModel
+import com.example.reminderapp.data.model.CheckModel
 import com.example.reminderapp.databinding.FragmentNewReminderBinding
 import com.example.reminderapp.ui.createnewreminder.adapter.CheckListAdapter
 import com.example.reminderapp.ui.createnewreminder.adapter.PhotoListAdapter
@@ -93,7 +93,7 @@ class NewReminderFragment : Fragment(), PhotoListAdapter.OnAddPhotoClickListener
 
         binding.btnFinish.setOnClickListener {
             // save reminder
-            
+
         }
     }
 
