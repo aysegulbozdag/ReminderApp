@@ -49,4 +49,7 @@ class CheckListAdapter(var checkList: MutableList<CheckModel>) :
             }
         }
     }
+
+    fun getCheckList(): List<CheckModel> = checkList.toList()
+
 }

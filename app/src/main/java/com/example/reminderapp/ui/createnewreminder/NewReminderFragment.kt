@@ -11,18 +11,32 @@ import android.view.ViewGroup
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import com.example.reminderapp.data.model.CheckModel
+import com.example.reminderapp.data.model.Reminder
 import com.example.reminderapp.databinding.FragmentNewReminderBinding
 import com.example.reminderapp.ui.createnewreminder.adapter.CheckListAdapter
 import com.example.reminderapp.ui.createnewreminder.adapter.PhotoListAdapter
 import com.example.reminderapp.ui.createnewreminder.bottomsheetdialog.DateAndTimePicker
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class NewReminderFragment : Fragment(), PhotoListAdapter.OnAddPhotoClickListener {
 
     private var _binding: FragmentNewReminderBinding? = null
     private val binding get() = _binding!!
 
     private lateinit var pickImageLauncher: ActivityResultLauncher<Intent>
+
+    private val viewModel: NewReminderViewModel by viewModels()
+
+    private val checkListAdapter: CheckListAdapter by lazy {
+        CheckListAdapter(
+            mutableListOf(
+                CheckModel()
+            )
+        )
+    }
 
 
     override fun onCreateView(
@@ -76,7 +90,7 @@ class NewReminderFragment : Fragment(), PhotoListAdapter.OnAddPhotoClickListener
 
     private fun onClickListener() {
         binding.txtAddCheckList.setOnClickListener {
-            binding.rvCheckList.adapter = CheckListAdapter(mutableListOf(CheckModel()))
+            binding.rvCheckList.adapter = checkListAdapter
         }
 
         binding.txtAddImage.setOnClickListener {
@@ -93,6 +107,16 @@ class NewReminderFragment : Fragment(), PhotoListAdapter.OnAddPhotoClickListener
 
         binding.btnFinish.setOnClickListener {
             // save reminder
+         /*   viewModel.saveReminder(Reminder(
+                title = binding.txtTittle.text.toString(),
+                checkList = checkListAdapter.getCheckList(),
+                photoList = (binding.rvPhotoList.adapter as PhotoListAdapter).getPhotoList(),
+                date = binding.txtDate.text.toString(),
+                time = binding.txtTime.text.toString(),
+                repeat = binding.txtRepeat.text.toString(),
+                repeatNo = binding.edtRepeatNo.text.toString().toInt(),
+                repeatType = binding.txtRepeatType.text.toString(),
+                active = "true"))*/
 
         }
     }

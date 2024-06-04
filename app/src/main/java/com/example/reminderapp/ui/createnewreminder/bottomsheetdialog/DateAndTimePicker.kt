@@ -17,7 +17,7 @@ class DateAndTimePicker : BottomSheetDialogFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = DateTimeBottomDialogBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -27,7 +27,6 @@ class DateAndTimePicker : BottomSheetDialogFragment() {
         binding.timePicker.setOnTimeChangedListener { view, hourOfDay, minute ->
             Log.i("TimePicker", "Hour: $hourOfDay, Minute: $minute")
         }
-
 
         binding.calendarView.setOnDateChangeListener { view, year, month, dayOfMonth ->
             Log.i("CalendarView", "Year: $year, Month: $month, Day: $dayOfMonth")

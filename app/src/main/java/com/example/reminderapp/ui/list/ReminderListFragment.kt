@@ -8,10 +8,12 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.example.reminderapp.R
 import com.example.reminderapp.databinding.FragmentListBinding
+import dagger.hilt.android.AndroidEntryPoint
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
  */
+@AndroidEntryPoint
 class ReminderListFragment : Fragment() {
 
     private var _binding: FragmentListBinding? = null

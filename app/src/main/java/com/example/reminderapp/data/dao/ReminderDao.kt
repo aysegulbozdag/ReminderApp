@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import com.example.reminderapp.data.model.Reminder
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface ReminderDao {
@@ -11,8 +12,8 @@ interface ReminderDao {
     suspend fun insertReminder(vararg reminder: Reminder)
 
     @Query("SELECT * FROM reminder_table")
-    suspend fun getAll(): List<Reminder>
+    fun getAll(): Flow<List<Reminder>>
 
     @Query("SELECT * FROM reminder_table WHERE reminder_table.id = :id")
-    suspend fun getReminder(id: Int):Reminder
+    fun getReminder(id: Int): Flow<Reminder>
 }

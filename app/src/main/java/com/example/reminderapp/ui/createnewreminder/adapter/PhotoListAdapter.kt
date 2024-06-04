@@ -69,6 +69,9 @@ class PhotoListAdapter(
         }
     }
 
+    fun getPhotoList(): List<Uri> = photoList.toList()
+
+
     interface OnAddPhotoClickListener {
         fun onAddPhotoClick()
     }
