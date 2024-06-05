@@ -3,6 +3,7 @@ package com.example.reminderapp.ui.createnewreminder.adapter
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import com.example.reminderapp.data.model.CheckModel
@@ -28,6 +29,10 @@ class CheckListAdapter(var checkList: MutableList<CheckModel>) :
         fun bind(checkModel: CheckModel) {
             checkModel.title = binding.txtTittle.text.toString()
 
+            binding.txtTittle.addTextChangedListener {
+                checkModel.title = it.toString()
+            }
+
             binding.txtTittle.setOnKeyListener { v, keyCode, event ->
                 if (event.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
                     checkList.add(adapterPosition + 1, CheckModel())
@@ -50,6 +55,6 @@ class CheckListAdapter(var checkList: MutableList<CheckModel>) :
         }
     }
 
-    fun getCheckModelList(): MutableList<CheckModel> = checkList
+    fun getCheckModelList(): List<CheckModel> = checkList.toList()
 
 }
