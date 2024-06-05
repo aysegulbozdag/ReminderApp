@@ -26,14 +26,14 @@ class CheckListAdapter(var checkList: MutableList<CheckModel>) :
     inner class ViewHolder(binding: ItemCheckListBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(checkModel: CheckModel) {
-            checkModel.title = binding.editTextText.text.toString()
+            checkModel.title = binding.txtTittle.text.toString()
 
-            binding.editTextText.setOnKeyListener { v, keyCode, event ->
+            binding.txtTittle.setOnKeyListener { v, keyCode, event ->
                 if (event.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
                     checkList.add(adapterPosition + 1, CheckModel())
                     v.clearFocus()
-                    binding.editTextText.post {
-                        binding.editTextText.requestFocus()
+                    binding.txtTittle.post {
+                        binding.txtTittle.requestFocus()
                     }
                     notifyItemInserted(adapterPosition + 1)
                     return@setOnKeyListener true
@@ -50,6 +50,6 @@ class CheckListAdapter(var checkList: MutableList<CheckModel>) :
         }
     }
 
-    fun getCheckList(): List<CheckModel> = checkList.toList()
+    fun getCheckModelList(): MutableList<CheckModel> = checkList
 
 }

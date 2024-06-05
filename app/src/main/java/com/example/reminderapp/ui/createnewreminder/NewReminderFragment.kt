@@ -19,9 +19,11 @@ import com.example.reminderapp.ui.createnewreminder.adapter.CheckListAdapter
 import com.example.reminderapp.ui.createnewreminder.adapter.PhotoListAdapter
 import com.example.reminderapp.ui.createnewreminder.bottomsheetdialog.DateAndTimePicker
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.Date
 
 @AndroidEntryPoint
-class NewReminderFragment : Fragment(), PhotoListAdapter.OnAddPhotoClickListener {
+class NewReminderFragment : Fragment(), PhotoListAdapter.OnAddPhotoClickListener,
+    DateAndTimePicker.OnDateSelectedListener {
 
     private var _binding: FragmentNewReminderBinding? = null
     private val binding get() = _binding!!
@@ -29,6 +31,8 @@ class NewReminderFragment : Fragment(), PhotoListAdapter.OnAddPhotoClickListener
     private lateinit var pickImageLauncher: ActivityResultLauncher<Intent>
 
     private val viewModel: NewReminderViewModel by viewModels()
+
+    private var selectedDate = Date()
 
     private val checkListAdapter: CheckListAdapter by lazy {
         CheckListAdapter(
@@ -98,27 +102,31 @@ class NewReminderFragment : Fragment(), PhotoListAdapter.OnAddPhotoClickListener
         }
 
         binding.txtSetDateTime.setOnClickListener {
-            DateAndTimePicker().show(childFragmentManager, "DateAndTimePicker")
+            val dateAndTimePicker = DateAndTimePicker()
+            dateAndTimePicker.setListener(this)
+            dateAndTimePicker.show(childFragmentManager, "DateAndTimePicker")
         }
 
         binding.btnCancel.setOnClickListener {
-            requireActivity().onBackPressedDispatcher.onBackPressed()
+            onBackPressed()
         }
 
         binding.btnFinish.setOnClickListener {
-            // save reminder
-         /*   viewModel.saveReminder(Reminder(
-                title = binding.txtTittle.text.toString(),
-                checkList = checkListAdapter.getCheckList(),
-                photoList = (binding.rvPhotoList.adapter as PhotoListAdapter).getPhotoList(),
-                date = binding.txtDate.text.toString(),
-                time = binding.txtTime.text.toString(),
-                repeat = binding.txtRepeat.text.toString(),
-                repeatNo = binding.edtRepeatNo.text.toString().toInt(),
-                repeatType = binding.txtRepeatType.text.toString(),
-                active = "true"))*/
-
+            viewModel.saveReminder(
+                Reminder(
+                    title = binding.txtTittle.text.toString(),
+                    checkList = checkListAdapter.getCheckModelList(),
+                    photoList = (binding.rvPhotoList.adapter as PhotoListAdapter).getPhotoList(),
+                    date = selectedDate,
+                    active = "true"
+                )
+            )
+            onBackPressed()
         }
+    }
+
+    private fun onBackPressed() {
+        requireActivity().onBackPressedDispatcher.onBackPressed()
     }
 
     private fun openGallery() {
@@ -132,6 +140,10 @@ class NewReminderFragment : Fragment(), PhotoListAdapter.OnAddPhotoClickListener
 
     override fun onAddPhotoClick() {
         openGallery()
+    }
+
+    override fun onDateSelected(date: Date) {
+        selectedDate = date
     }
 
     override fun onDestroyView() {

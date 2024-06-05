@@ -13,8 +13,6 @@ class NewReminderViewModel @Inject constructor(private val reminderRepository: R
     ViewModel() {
 
         fun saveReminder(reminder: Reminder) {
-            // Save reminder
-
             viewModelScope.launch {
                 reminderRepository.addReminder(reminder)
             }
