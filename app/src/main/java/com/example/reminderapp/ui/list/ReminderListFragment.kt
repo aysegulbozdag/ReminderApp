@@ -37,6 +37,11 @@ class ReminderListFragment : Fragment() {
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.remindersState.collectLatest {
+                if (it.isEmpty()) {
+                    binding.btnCreateReminder.visibility = View.VISIBLE
+                    binding.rvReminderList.visibility = View.GONE
+                }
+                else
                 binding.rvReminderList.adapter = ReminderListAdapter(it)
             }
         }

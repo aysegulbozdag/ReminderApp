@@ -14,7 +14,7 @@ import java.util.Date
 import javax.inject.Inject
 
 @HiltViewModel
-class ReminderListViewModel @Inject constructor(val repository: ReminderRepository) : ViewModel() {
+class ReminderListViewModel @Inject constructor(private val repository: ReminderRepository) : ViewModel() {
 
     private var _remindersState: MutableStateFlow<List<ListItem>> =
         MutableStateFlow(emptyList())

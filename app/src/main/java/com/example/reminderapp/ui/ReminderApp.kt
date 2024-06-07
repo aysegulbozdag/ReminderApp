@@ -1,4 +1,4 @@
-package com.example.reminderapp
+package com.example.reminderapp.ui
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp
