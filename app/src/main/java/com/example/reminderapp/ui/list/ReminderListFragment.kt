@@ -6,11 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
+import com.example.reminderapp.R
 import com.example.reminderapp.databinding.FragmentListBinding
 import com.example.reminderapp.ui.list.adapter.ReminderListAdapter
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -35,15 +37,29 @@ class ReminderListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.remindersState.collectLatest {
+        onClickListener()
+
+        CoroutineScope(Dispatchers.Main).launch {
+            viewModel.remindersState.collect {
+
                 if (it.isEmpty()) {
                     binding.btnCreateReminder.visibility = View.VISIBLE
                     binding.rvReminderList.visibility = View.GONE
+                } else {
+                    binding.btnCreateReminder.visibility = View.GONE
+                    binding.rvReminderList.visibility = View.VISIBLE
+                    binding.rvReminderList.adapter = ReminderListAdapter(it)
                 }
-                else
-                binding.rvReminderList.adapter = ReminderListAdapter(it)
             }
+        }
+
+    }
+
+
+    private fun onClickListener() = with(binding) {
+
+        btnCreateReminder.setOnClickListener {
+            findNavController().navigate(R.id.action_ListFragment_to_NewFragment)
         }
 
     }

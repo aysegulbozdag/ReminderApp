@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.reminderapp.data.model.Reminder
 import com.example.reminderapp.databinding.DateHeaderItemBinding
 import com.example.reminderapp.databinding.ReminderItemListBinding
+import java.util.Date
 
 class ReminderListAdapter(private val reminderList: List<ListItem>) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -15,10 +16,9 @@ class ReminderListAdapter(private val reminderList: List<ListItem>) :
     }
 
     override fun getItemViewType(position: Int): Int {
-        return if (position == reminderList.size) {
-            VIEW_TYPE_DATE_HEADER
-        } else {
-            VIEW_TYPE_ITEM
+        return when (reminderList[position]) {
+            is ListItem.ReminderItem-> VIEW_TYPE_ITEM
+            is ListItem.DateHeader-> VIEW_TYPE_DATE_HEADER
         }
     }
 
@@ -56,13 +56,13 @@ class ReminderListAdapter(private val reminderList: List<ListItem>) :
             }
 
             is ListItem.DateHeader -> {
-                (holder as DateHeaderViewHolder).bind(item.date.toString())
+                (holder as DateHeaderViewHolder).bind(item.date)
 
             }
         }
     }
 
-    override fun getItemCount(): Int = reminderList.size + 1
+    override fun getItemCount(): Int = reminderList.size
 
 
     inner class ReminderViewHolder(private val binding: ReminderItemListBinding) :
@@ -75,8 +75,8 @@ class ReminderListAdapter(private val reminderList: List<ListItem>) :
 
     inner class DateHeaderViewHolder(private val binding: DateHeaderItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(date: String) {
-            binding.dateHeader.text = date
+        fun bind(date: Date) {
+            binding.dateHeader.text = date.toString()
         }
     }
 }
