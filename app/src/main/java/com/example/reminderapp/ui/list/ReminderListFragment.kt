@@ -59,9 +59,29 @@ class ReminderListFragment : Fragment() {
     private fun onClickListener() = with(binding) {
 
         btnCreateReminder.setOnClickListener {
-            findNavController().navigate(R.id.action_ListFragment_to_NewFragment)
+            openNewReminderFragment()
         }
 
+        topAppBar.setOnMenuItemClickListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.addReminder -> {
+                    openNewReminderFragment()
+                    true
+                }
+
+                R.id.searchReminder ->
+                    true
+
+                else ->
+                    false
+
+            }
+        }
+
+    }
+
+    private fun openNewReminderFragment() {
+        findNavController().navigate(R.id.action_ListFragment_to_NewFragment)
     }
 
     override fun onDestroyView() {
