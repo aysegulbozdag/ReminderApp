@@ -1,6 +1,7 @@
 package com.example.reminderapp.ui.createnewreminder.bottomsheetdialog
 
 import androidx.lifecycle.ViewModel
+import com.example.reminderapp.utility.convertStringToDate
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
@@ -28,13 +29,6 @@ class DateTimePickerViewModel : ViewModel() {
             year.toString() + "-" + (month + 1).toString()
                     + "-" + dayOfMonth.toString()
         )
-    }
-
-    private fun convertStringToDate(dateStr: String, format: String = "yyyy-MM-dd"): Date {
-
-        val dateFormat = SimpleDateFormat(format, Locale.getDefault())
-        return dateFormat.parse(dateStr) as Date
-
     }
 
 }

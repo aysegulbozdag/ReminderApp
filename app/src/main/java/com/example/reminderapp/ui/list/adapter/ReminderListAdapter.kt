@@ -3,10 +3,11 @@ package com.example.reminderapp.ui.list.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.reminderapp.R
 import com.example.reminderapp.data.model.Reminder
 import com.example.reminderapp.databinding.DateHeaderItemBinding
 import com.example.reminderapp.databinding.ReminderItemListBinding
-import java.util.Date
+import com.example.reminderapp.utility.format
 
 class ReminderListAdapter(private val reminderList: List<ListItem>) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -50,8 +51,16 @@ class ReminderListAdapter(private val reminderList: List<ListItem>) :
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+
         when (val item = reminderList[position]) {
             is ListItem.ReminderItem -> {
+                val backgroundResource = when {
+                    position != 1 && position != itemCount - 1 -> R.drawable.rounded_all
+                    position == 1 -> R.drawable.rounded_top
+                    position == itemCount - 1 -> R.drawable.rounded_bottom
+                    else -> R.drawable.rounded_no
+                }
+                holder.itemView.setBackgroundResource(backgroundResource)
                 (holder as ReminderViewHolder).bind(item.reminder)
             }
 
@@ -69,14 +78,16 @@ class ReminderListAdapter(private val reminderList: List<ListItem>) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(reminder: Reminder) {
             binding.reminderTitle.text = reminder.title
-            binding.reminderDescription.text = reminder.date.toString()
+            binding.reminderDescription.text = reminder.date.format()
+
+
         }
     }
 
     inner class DateHeaderViewHolder(private val binding: DateHeaderItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(date: Date) {
-            binding.dateHeader.text = date.toString()
+        fun bind(date: String) {
+            binding.dateHeader.text = date
         }
     }
 }

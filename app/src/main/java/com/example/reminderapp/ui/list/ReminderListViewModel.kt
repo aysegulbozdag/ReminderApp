@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.reminderapp.data.model.Reminder
 import com.example.reminderapp.data.repositories.ReminderRepository
 import com.example.reminderapp.ui.list.adapter.ListItem
+import com.example.reminderapp.utility.intervalDateFormatted
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -35,11 +36,11 @@ class ReminderListViewModel @Inject constructor(private val repository: Reminder
         }
     }
 
-    private fun groupByDate(items: List<Reminder>): Map<Date, List<Reminder>> {
-        return items.groupBy { it.date }
+    private fun groupByDate(items: List<Reminder>): Map<String, List<Reminder>> {
+        return items.groupBy { it.date.intervalDateFormatted() }
     }
 
-    private fun prepareListItems(groupedItems: Map<Date, List<Reminder>>): List<ListItem> {
+    private fun prepareListItems(groupedItems: Map<String, List<Reminder>>): List<ListItem> {
         val listItems = mutableListOf<ListItem>()
 
         for ((date, items) in groupedItems) {
