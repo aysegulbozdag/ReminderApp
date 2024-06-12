@@ -11,7 +11,7 @@ interface ReminderDao {
     @Insert
     suspend fun insertReminder(vararg reminder: Reminder)
 
-    @Query("SELECT * FROM reminder_table")
+    @Query("SELECT * FROM reminder_table ORDER BY date DESC")
     fun getAll(): Flow<List<Reminder>>
 
     @Query("SELECT * FROM reminder_table WHERE reminder_table.id = :id")

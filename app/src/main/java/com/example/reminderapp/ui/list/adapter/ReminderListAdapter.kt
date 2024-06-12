@@ -8,6 +8,8 @@ import com.example.reminderapp.data.model.Reminder
 import com.example.reminderapp.databinding.DateHeaderItemBinding
 import com.example.reminderapp.databinding.ReminderItemListBinding
 import com.example.reminderapp.utility.format
+import com.example.reminderapp.utility.intervalDateFormatted
+import com.example.reminderapp.utility.isSameDay
 
 class ReminderListAdapter(private val reminderList: List<ListItem>) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -52,15 +54,21 @@ class ReminderListAdapter(private val reminderList: List<ListItem>) :
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
 
+        /*   // DateItem'ların indekslerini bulalım
+         val dateIndices = reminderList.mapIndexedNotNull { index, item ->
+             if (item is ListItem.ReminderItem) index else null
+         }
+
+
+         // İki DateItem arasındaki öğe sayısını hesaplayalım
+       for (i in 0 until dateIndices.size - 1) {
+             val sizeBetweenDates = dateIndices[i + 1] - dateIndices[i] - 1
+             println("DateItem ${i + 1} ile DateItem ${i + 2} arasındaki öğe sayısı: $sizeBetweenDates")
+         }*/
+
+
         when (val item = reminderList[position]) {
             is ListItem.ReminderItem -> {
-                val backgroundResource = when {
-                    position != 1 && position != itemCount - 1 -> R.drawable.rounded_all
-                    position == 1 -> R.drawable.rounded_top
-                    position == itemCount - 1 -> R.drawable.rounded_bottom
-                    else -> R.drawable.rounded_no
-                }
-                holder.itemView.setBackgroundResource(backgroundResource)
                 (holder as ReminderViewHolder).bind(item.reminder)
             }
 
@@ -79,8 +87,6 @@ class ReminderListAdapter(private val reminderList: List<ListItem>) :
         fun bind(reminder: Reminder) {
             binding.reminderTitle.text = reminder.title
             binding.reminderDescription.text = reminder.date.format()
-
-
         }
     }
 

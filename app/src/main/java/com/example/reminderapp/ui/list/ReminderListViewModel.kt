@@ -1,6 +1,5 @@
 package com.example.reminderapp.ui.list
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.reminderapp.data.model.Reminder
@@ -8,13 +7,10 @@ import com.example.reminderapp.data.repositories.ReminderRepository
 import com.example.reminderapp.ui.list.adapter.ListItem
 import com.example.reminderapp.utility.intervalDateFormatted
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import java.util.Date
 import javax.inject.Inject
 
 @HiltViewModel
