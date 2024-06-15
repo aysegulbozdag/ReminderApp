@@ -3,13 +3,10 @@ package com.example.reminderapp.ui.list.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.reminderapp.R
 import com.example.reminderapp.data.model.Reminder
 import com.example.reminderapp.databinding.DateHeaderItemBinding
 import com.example.reminderapp.databinding.ReminderItemListBinding
 import com.example.reminderapp.utility.format
-import com.example.reminderapp.utility.intervalDateFormatted
-import com.example.reminderapp.utility.isSameDay
 
 class ReminderListAdapter(private val reminderList: List<ListItem>) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {

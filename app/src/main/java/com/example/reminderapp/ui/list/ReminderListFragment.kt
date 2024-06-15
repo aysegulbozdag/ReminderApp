@@ -1,14 +1,20 @@
 package com.example.reminderapp.ui.list
 
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
 import com.example.reminderapp.R
 import com.example.reminderapp.databinding.FragmentListBinding
+import com.example.reminderapp.services.ReminderWorker
+import com.example.reminderapp.services.createNotificationChannel
 import com.example.reminderapp.ui.list.adapter.ReminderListAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
@@ -34,11 +40,16 @@ class ReminderListFragment : Fragment() {
 
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         onClickListener()
+        this.context?.let { createNotificationChannel(it) }
 
+        // İş isteğini planlayın
+        val workRequest = OneTimeWorkRequestBuilder<ReminderWorker>().build()
+        this.context?.let { WorkManager.getInstance(it).enqueue(workRequest) }
         CoroutineScope(Dispatchers.Main).launch {
             viewModel.remindersState.collect {
 
