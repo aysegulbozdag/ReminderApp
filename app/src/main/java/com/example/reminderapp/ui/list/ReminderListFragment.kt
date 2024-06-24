@@ -46,8 +46,7 @@ class ReminderListFragment : Fragment() {
 
         onClickListener()
         this.context?.let { createNotificationChannel(it) }
-
-        // İş isteğini planlayın
+        
         val workRequest = OneTimeWorkRequestBuilder<ReminderWorker>().build()
         this.context?.let { WorkManager.getInstance(it).enqueue(workRequest) }
         CoroutineScope(Dispatchers.Main).launch {
