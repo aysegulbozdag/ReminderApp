@@ -26,7 +26,7 @@ class ReminderWorker(appContext: Context, workerParams: WorkerParameters) :
     CoroutineWorker(appContext, workerParams) {
 
     override suspend fun doWork(): Result {
-        sendNotification(applicationContext, "İş Tamamlandı", "Arka plan işi başarıyla tamamlandı.")
+        sendNotification(applicationContext, "İş Tamamlandı", "Arka plan işi başarıyla tamamlandı...")
 
         return Result.success()
     }
