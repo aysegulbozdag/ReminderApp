@@ -20,6 +20,8 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.util.Date
+import java.util.concurrent.TimeUnit
 
 @AndroidEntryPoint
 class ReminderListFragment : Fragment() {
@@ -45,10 +47,12 @@ class ReminderListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         onClickListener()
-        this.context?.let { createNotificationChannel(it) }
-        
-        val workRequest = OneTimeWorkRequestBuilder<ReminderWorker>().build()
-        this.context?.let { WorkManager.getInstance(it).enqueue(workRequest) }
+       /* this.context?.let { createNotificationChannel(it) }
+        val workRequest = OneTimeWorkRequestBuilder<ReminderWorker>()
+            .setInitialDelay(Date().time, TimeUnit.MILLISECONDS)
+            .build()
+
+        this.context?.let { WorkManager.getInstance(it).enqueue(workRequest) }*/
         CoroutineScope(Dispatchers.Main).launch {
             viewModel.remindersState.collect {
 

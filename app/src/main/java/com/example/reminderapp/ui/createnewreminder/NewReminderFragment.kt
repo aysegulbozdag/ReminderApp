@@ -12,14 +12,20 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
 import com.example.reminderapp.data.model.CheckModel
 import com.example.reminderapp.data.model.Reminder
 import com.example.reminderapp.databinding.FragmentNewReminderBinding
+import com.example.reminderapp.services.ReminderWorker
+import com.example.reminderapp.services.createNotificationChannel
 import com.example.reminderapp.ui.createnewreminder.adapter.CheckListAdapter
 import com.example.reminderapp.ui.createnewreminder.adapter.PhotoListAdapter
 import com.example.reminderapp.ui.createnewreminder.bottomsheetdialog.DateAndTimePicker
 import dagger.hilt.android.AndroidEntryPoint
+import java.lang.System.currentTimeMillis
 import java.util.Date
+import java.util.concurrent.TimeUnit
 
 @AndroidEntryPoint
 class NewReminderFragment : Fragment(), PhotoListAdapter.OnAddPhotoClickListener,
@@ -70,7 +76,6 @@ class NewReminderFragment : Fragment(), PhotoListAdapter.OnAddPhotoClickListener
                      val selectedImage: Uri? = result.data?.data
                      binding.imgPhoto.setImageURI(selectedImage)*/
 
-                    if (result.resultCode == RESULT_OK) {
                         val clipData = result.data?.clipData
                         val uris = mutableListOf<Uri>()
                         if (clipData != null) {
@@ -80,16 +85,14 @@ class NewReminderFragment : Fragment(), PhotoListAdapter.OnAddPhotoClickListener
                         } else {
                             result.data?.data?.let { uris.add(it) }
                         }
-                        binding.rvPhotoList.adapter = PhotoListAdapter(uris, this)
-                        binding.rvPhotoList.layoutManager =
-                            androidx.recyclerview.widget.LinearLayoutManager(
-                                context,
-                                androidx.recyclerview.widget.LinearLayoutManager.HORIZONTAL,
-                                false
-                            )
+                        setAdapter(uris)
                     }
-                }
             }
+    }
+
+    private fun setAdapter(uris: MutableList<Uri>) {
+        binding.rvPhotoList.adapter = PhotoListAdapter(uris, this)
+
     }
 
     private fun onClickListener() {
@@ -121,12 +124,25 @@ class NewReminderFragment : Fragment(), PhotoListAdapter.OnAddPhotoClickListener
                     active = "true"
                 )
             )
+
+            workRequest()
             onBackPressed()
         }
     }
 
     private fun onBackPressed() {
         requireActivity().onBackPressedDispatcher.onBackPressed()
+    }
+
+    private fun workRequest() {
+        val customTime = selectedDate.time
+        val currentTime = currentTimeMillis()
+        val delay = customTime - currentTime
+        this.context?.let { createNotificationChannel(it) }
+        val workRequest = OneTimeWorkRequestBuilder<ReminderWorker>()
+            .setInitialDelay(delay, TimeUnit.MILLISECONDS)
+            .build()
+        this.context?.let { WorkManager.getInstance(it).enqueue(workRequest) }
     }
 
     private fun openGallery() {
