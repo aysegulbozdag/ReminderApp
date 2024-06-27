@@ -41,7 +41,7 @@ fun Date.isSameDay(otherDay: Date): Boolean {
 }
 
 
-fun Date.format(): String {
+fun Date.timeFormat(): String {
     val calendar = Calendar.getInstance()
     calendar.time = this
 

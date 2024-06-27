@@ -9,19 +9,13 @@ import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.work.OneTimeWorkRequestBuilder
-import androidx.work.WorkManager
 import com.example.reminderapp.R
 import com.example.reminderapp.databinding.FragmentListBinding
-import com.example.reminderapp.services.ReminderWorker
-import com.example.reminderapp.services.createNotificationChannel
 import com.example.reminderapp.ui.list.adapter.ReminderListAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.util.Date
-import java.util.concurrent.TimeUnit
 
 @AndroidEntryPoint
 class ReminderListFragment : Fragment() {
@@ -47,12 +41,7 @@ class ReminderListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         onClickListener()
-       /* this.context?.let { createNotificationChannel(it) }
-        val workRequest = OneTimeWorkRequestBuilder<ReminderWorker>()
-            .setInitialDelay(Date().time, TimeUnit.MILLISECONDS)
-            .build()
 
-        this.context?.let { WorkManager.getInstance(it).enqueue(workRequest) }*/
         CoroutineScope(Dispatchers.Main).launch {
             viewModel.remindersState.collect {
 

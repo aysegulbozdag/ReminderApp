@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.reminderapp.data.model.Reminder
 import com.example.reminderapp.databinding.DateHeaderItemBinding
 import com.example.reminderapp.databinding.ReminderItemListBinding
-import com.example.reminderapp.utility.format
+import com.example.reminderapp.utility.timeFormat
 
 class ReminderListAdapter(private val reminderList: List<ListItem>) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -83,7 +83,7 @@ class ReminderListAdapter(private val reminderList: List<ListItem>) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(reminder: Reminder) {
             binding.reminderTitle.text = reminder.title
-            binding.reminderDescription.text = reminder.date.format()
+            binding.reminderDescription.text = reminder.date.timeFormat()
         }
     }
 

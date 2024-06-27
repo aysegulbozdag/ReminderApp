@@ -5,24 +5,34 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.widget.addTextChangedListener
+import androidx.core.widget.doAfterTextChanged
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import androidx.work.Data
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import com.example.reminderapp.data.model.CheckModel
 import com.example.reminderapp.data.model.Reminder
 import com.example.reminderapp.databinding.FragmentNewReminderBinding
 import com.example.reminderapp.services.ReminderWorker
-import com.example.reminderapp.services.createNotificationChannel
+import com.example.reminderapp.utility.createNotificationChannel
 import com.example.reminderapp.ui.createnewreminder.adapter.CheckListAdapter
 import com.example.reminderapp.ui.createnewreminder.adapter.PhotoListAdapter
 import com.example.reminderapp.ui.createnewreminder.bottomsheetdialog.DateAndTimePicker
+import com.example.reminderapp.utility.intervalDateFormatted
+import com.example.reminderapp.utility.timeFormat
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import java.lang.System.currentTimeMillis
 import java.util.Date
 import java.util.concurrent.TimeUnit
@@ -38,7 +48,7 @@ class NewReminderFragment : Fragment(), PhotoListAdapter.OnAddPhotoClickListener
 
     private val viewModel: NewReminderViewModel by viewModels()
 
-    private var selectedDate = Date()
+    private var selectedDate: Date? = null
 
     private val checkListAdapter: CheckListAdapter by lazy {
         CheckListAdapter(
@@ -85,6 +95,7 @@ class NewReminderFragment : Fragment(), PhotoListAdapter.OnAddPhotoClickListener
                         } else {
                             result.data?.data?.let { uris.add(it) }
                         }
+                    if (uris.isEmpty().not())
                         setAdapter(uris)
                     }
             }
@@ -95,7 +106,23 @@ class NewReminderFragment : Fragment(), PhotoListAdapter.OnAddPhotoClickListener
 
     }
 
-    private fun onClickListener() {
+    private fun onClickListener()= with(binding) {
+
+
+
+       txtTittle.doAfterTextChanged {
+           viewModel.setTitle(txtTittle.text.toString())
+       }
+
+       viewLifecycleOwner.lifecycleScope.launch {
+           viewModel.btnIsEnabled.collect{
+               if (it){
+                   btnFinish.isEnabled = true
+                   btnFinish.alpha = 0.9F
+               }
+           }
+       }
+
         binding.txtAddCheckList.setOnClickListener {
             binding.rvCheckList.adapter = checkListAdapter
         }
@@ -106,7 +133,7 @@ class NewReminderFragment : Fragment(), PhotoListAdapter.OnAddPhotoClickListener
 
         binding.txtSetDateTime.setOnClickListener {
             val dateAndTimePicker = DateAndTimePicker()
-            dateAndTimePicker.setListener(this)
+            dateAndTimePicker.setListener(this@NewReminderFragment)
             dateAndTimePicker.show(childFragmentManager, "DateAndTimePicker")
         }
 
@@ -119,13 +146,13 @@ class NewReminderFragment : Fragment(), PhotoListAdapter.OnAddPhotoClickListener
                 Reminder(
                     title = binding.txtTittle.text.toString(),
                     checkList = checkListAdapter.getCheckModelList(),
-                    photoList = (binding.rvPhotoList.adapter as PhotoListAdapter).getPhotoList(),
-                    date = selectedDate,
+                    photoList = (binding.rvPhotoList.adapter as? PhotoListAdapter)?.getPhotoList(),
+                    date = selectedDate ?: Date(),
                     active = "true"
                 )
             )
 
-            workRequest()
+            scheduleWork()
             onBackPressed()
         }
     }
@@ -134,14 +161,26 @@ class NewReminderFragment : Fragment(), PhotoListAdapter.OnAddPhotoClickListener
         requireActivity().onBackPressedDispatcher.onBackPressed()
     }
 
-    private fun workRequest() {
-        val customTime = selectedDate.time
-        val currentTime = currentTimeMillis()
-        val delay = customTime - currentTime
-        this.context?.let { createNotificationChannel(it) }
-        val workRequest = OneTimeWorkRequestBuilder<ReminderWorker>()
-            .setInitialDelay(delay, TimeUnit.MILLISECONDS)
+    private fun scheduleWork() {
+        val data = Data.Builder()
+            .putString("title", binding.txtTittle.text.toString())
+            .putString(
+                "message",
+                " ${selectedDate?.intervalDateFormatted()}, ${selectedDate?.timeFormat()}"
+            )
             .build()
+
+        val customTime = selectedDate?.time
+        val currentTime = currentTimeMillis()
+        val delay = customTime?.minus(currentTime)
+
+        this.context?.let { createNotificationChannel(it) }
+
+        val workRequest = OneTimeWorkRequestBuilder<ReminderWorker>()
+            .setInputData(data)
+            .setInitialDelay(delay!!, TimeUnit.MILLISECONDS)
+            .build()
+
         this.context?.let { WorkManager.getInstance(it).enqueue(workRequest) }
     }
 
@@ -160,6 +199,7 @@ class NewReminderFragment : Fragment(), PhotoListAdapter.OnAddPhotoClickListener
 
     override fun onDateSelected(date: Date) {
         selectedDate = date
+        viewModel.setSelectedDate(date)
     }
 
     override fun onDestroyView() {
