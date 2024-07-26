@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:background="@color/bg_gray"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:background="@color/bg_gray">
 
     <CalendarView
         android:id="@+id/calendarView"
@@ -36,7 +36,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginBottom="16dp"
         android:background="@android:color/transparent"
-        android:text="İptal et"
+        android:text="@string/cancel"
         android:textColor="@color/purple"
         android:textSize="16sp"
         android:textStyle="bold"
@@ -52,7 +52,7 @@
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="16dp"
         android:background="@android:color/transparent"
-        android:text="Bitti"
+        android:text="@string/finish"
         android:textColor="@color/purple"
         android:textSize="16sp"
         android:textStyle="bold"

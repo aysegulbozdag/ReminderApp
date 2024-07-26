@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ReminderApp</string>
+    <string name="action_settings">Ayarlar</string>
+    <string name="next">İleri</string>
+    <string name="previous">Geri</string>
+    <string name="reminder">Hatırlatıcı</string>
+    <string name="have_task">Yapman gereken bir görev var.</string>
+    <string name="new_reminder">Bir hatırlatıcı yazın.</string>
+    <string name="note">Not</string>
+    <string name="add_check_list">Kontrol Listesine Ekle</string>
+    <string name="add_image">Görüntü Ekle</string>
+    <string name="set_date_time">Tarih ve Saat Ayarla</string>
+    <string name="cancel">İptal et</string>
+    <string name="finish">Bitti</string>
+    <string name="add">Ekle</string>
+    <string name="search">Ara</string>
+    <string name="search_reminder">search reminder</string>
+</resources>

@@ -1,10 +1,18 @@
 <resources>
     <string name="app_name">ReminderApp</string>
     <string name="action_settings">Settings</string>
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
     <string name="reminder">Reminder</string>
     <string name="have_task">You have a duty to do.</string>
+    <string name="new_reminder">Write a reminder</string>
+    <string name="note">Note</string>
+    <string name="add_check_list">Add To Check List</string>
+    <string name="add_image">Add Image</string>
+    <string name="set_date_time">Set Date and Time</string>
+    <string name="cancel">Cancel</string>
+    <string name="finish">Finish</string>
+    <string name="add">add</string>
+    <string name="search">search</string>
+    <string name="search_reminder">search reminder</string>
 </resources>

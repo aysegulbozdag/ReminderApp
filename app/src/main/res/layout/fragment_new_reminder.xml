@@ -1,6 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -9,7 +7,6 @@
     android:background="@color/bg_gray"
     android:padding="16dp">
 
-
     <EditText
         android:id="@+id/txtTittle"
         android:layout_width="0dp"
@@ -17,7 +14,7 @@
         android:layout_marginEnd="16dp"
         android:background="@android:color/transparent"
         android:ems="10"
-        android:hint="Note"
+        android:hint="@string/note"
         android:padding="10dp"
         android:textColor="#FFFFFF"
         android:textColorHint="#FFFFFF"
@@ -40,7 +37,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:text="Kontrol Listesine Ekle"
+        android:text="@string/add_check_list"
         android:textColor="#FFFFFF"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@+id/imgCheck"
@@ -67,7 +64,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:text="Görüntü Ekle"
+        android:text="@string/add_image"
         android:textColor="#FFFFFF"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@+id/imgPhoto"
@@ -90,9 +87,9 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        android:orientation="horizontal"
         android:layout_marginBottom="16dp"
+        android:orientation="horizontal"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toTopOf="@+id/txtSetDateTime"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -103,7 +100,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:text="Tarih ve Saat Ayarla"
+        android:text="@string/set_date_time"
         android:textColor="#FFFFFF"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@+id/imgSetDateTime"
@@ -126,7 +123,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:background="@android:color/transparent"
-        android:text="İptal et"
+        android:text="@string/cancel"
         android:textColor="@color/purple"
         android:textSize="16sp"
         android:textStyle="bold"
@@ -136,20 +133,19 @@
 
     <Button
         android:id="@+id/btnFinish"
-        android:enabled="false"
-        android:alpha=".5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="32dp"
+        android:alpha=".5"
         android:background="@android:color/transparent"
-        android:text="Bitti"
+        android:enabled="false"
+        android:text="@string/finish"
         android:textColor="@color/purple"
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/view2"
-         />
+        app:layout_constraintStart_toEndOf="@+id/view2" />
 
     <View
         android:id="@+id/view2"
@@ -161,8 +157,5 @@
         app:layout_constraintEnd_toStartOf="@+id/btnFinish"
         app:layout_constraintStart_toEndOf="@+id/btnCancel"
         app:layout_constraintTop_toTopOf="@+id/btnCancel" />
-
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

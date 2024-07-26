@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/bg_gray"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_gray">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbarLayout"
@@ -28,6 +28,7 @@
                 android:id="@+id/topAppBar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
+                android:layout_marginTop="16dp"
                 android:elevation="0dp"
                 app:layout_collapseMode="pin"
                 app:menu="@menu/menu_main"
@@ -44,8 +45,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="24dp"
-        android:drawableLeft="@drawable/baseline_add_24"
-        android:text="Bir hatırlatıcı yazın "
+        android:drawableStart="@drawable/baseline_add_24"
+        android:text="@string/new_reminder"
         android:textSize="16sp"
         android:visibility="gone"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
@@ -56,17 +57,17 @@
         android:id="@+id/rvReminderList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginHorizontal="8dp"
+        android:layout_marginTop="16dp"
         android:clipToPadding="false"
         android:paddingStart="8dp"
         android:paddingTop="8dp"
         android:paddingEnd="8dp"
         android:paddingBottom="8dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginHorizontal="8dp"
         android:scrollbars="vertical"
-        tools:listitem="@layout/reminder_item_list"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:listitem="@layout/reminder_item_list" />
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
