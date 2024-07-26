@@ -16,4 +16,6 @@
     <string name="add">Ekle</string>
     <string name="search">Ara</string>
     <string name="search_reminder">search reminder</string>
+    <string name="list_fragment">List fragment</string>
+    <string name="new_reminder_fragment">New reminder fragment</string>
 </resources>
