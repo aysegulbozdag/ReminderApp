@@ -7,7 +7,7 @@ import com.example.reminderapp.data.repositories.ReminderRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 import java.util.Date
 import javax.inject.Inject
@@ -16,24 +16,29 @@ import javax.inject.Inject
 class NewReminderViewModel @Inject constructor(private val reminderRepository: ReminderRepository) :
     ViewModel() {
 
-    private var selectedDate: Date? = null
-    private var title = ""
+    private val _selectedDate = MutableStateFlow<Date?>(null)
+    private val selectedDate: StateFlow<Date?> get() = _selectedDate
 
-     var btnIsEnabled: StateFlow<Boolean> =
-        MutableStateFlow(selectedDate != null && title.isNotEmpty()).asStateFlow()
+    private val _title = MutableStateFlow("")
+    val title: StateFlow<String> get() = _title
 
-        fun saveReminder(reminder: Reminder) {
-            viewModelScope.launch {
-                reminderRepository.addReminder(reminder)
-            }
+    val btnIsEnabled = selectedDate.combine(title) { date, tittle ->
+        date != null && tittle.isNotEmpty()
+    }
+
+
+    fun saveReminder(reminder: Reminder) {
+        viewModelScope.launch {
+            reminderRepository.addReminder(reminder)
         }
+    }
 
     fun setSelectedDate(date: Date) {
-        selectedDate = date
+        _selectedDate.value = date
     }
 
     fun setTitle(title: String) {
-        this.title = title
+        _title.value = title
     }
 
 }

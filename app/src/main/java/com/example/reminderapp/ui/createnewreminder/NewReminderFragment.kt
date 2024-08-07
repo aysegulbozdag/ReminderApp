@@ -5,16 +5,12 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.widget.addTextChangedListener
 import androidx.core.widget.doAfterTextChanged
-import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -86,18 +82,18 @@ class NewReminderFragment : Fragment(), PhotoListAdapter.OnAddPhotoClickListener
                      val selectedImage: Uri? = result.data?.data
                      binding.imgPhoto.setImageURI(selectedImage)*/
 
-                        val clipData = result.data?.clipData
-                        val uris = mutableListOf<Uri>()
-                        if (clipData != null) {
-                            for (i in 0 until clipData.itemCount) {
-                                uris.add(clipData.getItemAt(i).uri)
-                            }
-                        } else {
-                            result.data?.data?.let { uris.add(it) }
+                    val clipData = result.data?.clipData
+                    val uris = mutableListOf<Uri>()
+                    if (clipData != null) {
+                        for (i in 0 until clipData.itemCount) {
+                            uris.add(clipData.getItemAt(i).uri)
                         }
+                    } else {
+                        result.data?.data?.let { uris.add(it) }
+                    }
                     if (uris.isEmpty().not())
                         setAdapter(uris)
-                    }
+                }
             }
     }
 
@@ -106,22 +102,22 @@ class NewReminderFragment : Fragment(), PhotoListAdapter.OnAddPhotoClickListener
 
     }
 
-    private fun onClickListener()= with(binding) {
+    private fun onClickListener() = with(binding) {
 
 
+        txtTittle.doAfterTextChanged {
+            viewModel.setTitle(txtTittle.text.toString())
+        }
 
-       txtTittle.doAfterTextChanged {
-           viewModel.setTitle(txtTittle.text.toString())
-       }
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.btnIsEnabled.collect() {
+                if (it) {
+                    btnFinish.isEnabled = true
+                    btnFinish.alpha = 0.9F
 
-       viewLifecycleOwner.lifecycleScope.launch {
-           viewModel.btnIsEnabled.collect{
-               if (it){
-                   btnFinish.isEnabled = true
-                   btnFinish.alpha = 0.9F
-               }
-           }
-       }
+                }
+            }
+        }
 
         binding.txtAddCheckList.setOnClickListener {
             binding.rvCheckList.adapter = checkListAdapter
