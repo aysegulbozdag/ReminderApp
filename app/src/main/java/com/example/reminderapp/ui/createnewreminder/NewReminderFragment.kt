@@ -21,10 +21,10 @@ import com.example.reminderapp.data.model.CheckModel
 import com.example.reminderapp.data.model.Reminder
 import com.example.reminderapp.databinding.FragmentNewReminderBinding
 import com.example.reminderapp.services.ReminderWorker
-import com.example.reminderapp.utility.createNotificationChannel
 import com.example.reminderapp.ui.createnewreminder.adapter.CheckListAdapter
 import com.example.reminderapp.ui.createnewreminder.adapter.PhotoListAdapter
 import com.example.reminderapp.ui.createnewreminder.bottomsheetdialog.DateAndTimePicker
+import com.example.reminderapp.utility.createNotificationChannel
 import com.example.reminderapp.utility.intervalDateFormatted
 import com.example.reminderapp.utility.timeFormat
 import dagger.hilt.android.AndroidEntryPoint
