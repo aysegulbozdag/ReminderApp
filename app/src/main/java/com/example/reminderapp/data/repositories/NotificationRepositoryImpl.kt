@@ -20,6 +20,7 @@ class NotificationRepositoryImpl @Inject constructor(private val notificationMan
         }
 
         notificationManager.notify(PERMISSION_REQUEST_NOTIFICATIONS, builder.build())
+        
     }
 
 }
